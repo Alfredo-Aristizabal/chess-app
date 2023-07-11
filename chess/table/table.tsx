@@ -1,7 +1,6 @@
-import tableDesign from "./tableDesign";
-import React from "react";
+import React, { useEffect } from "react";
 
-export class TableController {
+export class Table {
   typeTable: string;
   IDES: number[][] = [[], [], [], [], [], [], [], []];
 
@@ -31,6 +30,210 @@ export class TableController {
 
   insertTable(): JSX.Element {
     this.orderIdes();
-    return tableDesign(this.IDES, this.typeTable);
+    return this.tableDesign();
+  }
+
+  tableDesign(): JSX.Element {
+    let count: number = 0;
+
+    let colorBoxesForBlack: string[] = [
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+    ];
+
+    let colorBoxesForWhite: string[] = [
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+      "#779556",
+      "white",
+    ];
+
+    let lettersForWhite: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    let lettersForBlack: string[] = ["h", "g", "f", "e", "d", "c", "b", "a"];
+
+    let numbersForWhite: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+    let numbersForBlack: number[] = [8, 7, 6, 5, 4, 3, 2, 1];
+
+    let letters: string[] =
+      this.typeTable == "white" ? lettersForWhite : lettersForBlack;
+    let letterCount: number = 0;
+
+    let numbers: number[] =
+      this.typeTable == "white" ? numbersForWhite : numbersForBlack;
+
+    return (
+      <div
+        className="w-full flex items-center justify-center"
+        style={{ marginTop: "80px" }}
+      >
+        <table>
+          <tbody className="w-[500px]" id="tbody">
+            {this.IDES.map((row) => {
+              return (
+                <tr className="w-[500px] text-center cursor-pointer select-none">
+                  <td style={{ width: "2.5rem" }}>{letters[letterCount++]}</td>
+                  {row.map((id) => {
+                    return (
+                      <td
+                        style={{
+                          width: "3.5rem",
+                          fontSize: "40px",
+                          backgroundColor: `${
+                            this.typeTable === "white"
+                              ? colorBoxesForWhite[count++]
+                              : colorBoxesForBlack[count++]
+                          }`,
+                        }}
+                        className={`h-14 border-[2px] boxTable font-roboto`}
+                        id={"box" + id}
+                      ></td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+            <tr>
+              <td></td>
+              {letters.map((letter) => {
+                return (
+                  <td style={{ width: "3.5rem" }}>
+                    <p className="text-center"> {letter}</p>
+                  </td>
+                );
+              })}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
   }
 }

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { table } from "console";
-import { TableController } from "../chess/table/table";
+import { Table } from "../chess/table/table";
+import { ControllerChess } from "../chess/controller/ControllerChess";
 
 const GET_USERS = gql`
   query Users {
@@ -13,7 +13,23 @@ const GET_USERS = gql`
 `;
 function Home() {
   const { data } = useQuery(GET_USERS);
-  let table = new TableController("white");
+  let table = new Table("white");
+
+  useEffect(() => {
+    const tbody: HTMLElement | null = document.getElementById("tbody");
+    const controllerChess = new ControllerChess(tbody);
+    controllerChess.setPieces();
+    tbody?.addEventListener("click", (e: MouseEvent) => {
+      const evt = e.target as HTMLTableCellElement;
+      const isBoxOfTable = evt.className.includes("boxTable");
+      if (isBoxOfTable) controllerChess.selectBox(evt);
+    });
+
+    return () => {
+      tbody?.removeEventListener("click", () => {});
+    };
+  }, []);
+
   return (
     <>
       <div className="bg-gray-100 mb-5">
