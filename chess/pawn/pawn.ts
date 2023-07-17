@@ -3,11 +3,7 @@ import { Pieces } from "../pieces/pieces";
 export class Pawn extends Pieces {
   piece: string;
 
-  constructor(piece: string) {
-    super(piece);
-  }
-  
-  setPiece(box: HTMLElement):void  {
-    box.textContent = this.piece;
+  constructor(piece: string, colorPiece: string) {
+    super(piece, colorPiece);
   }
 }

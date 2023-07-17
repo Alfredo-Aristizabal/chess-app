@@ -1,9 +1,13 @@
 export abstract class Pieces {
   piece: string;
+  colorPiece: string;
 
-  constructor(piece: string) {
+  constructor(piece: string, colorPiece: string) {
     this.piece = piece;
+    this.colorPiece = colorPiece;
   }
 
-  abstract setPiece(box: HTMLElement): void;
+  setPiece(box: HTMLElement): void {
+    box.textContent = this.piece;
+  }
 }
