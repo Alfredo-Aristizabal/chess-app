@@ -209,8 +209,9 @@ export class Table {
                       <td
                         key={id}
                         style={{
-                          width: "3.5rem",
+                          width: "4rem",
                           fontSize: "40px",
+                          height: "4rem",
                           backgroundColor: `${
                             this.typeTable === "white"
                               ? colorBoxesForWhite[count++]

@@ -9,6 +9,7 @@ export class ControllerChess {
   colorBoxSelect: string;
   piecesBlack: string[] = ["♜", "♞", "♝", "♚", "♛", "♟"];
   pieceWhite: string[] = ["♖", "♘", "♗", "♔", "♕", "♙"];
+
   WHITE_PIECES: Pieces[] = [
     new Pawn("♙", "white"),
     new Pawn("♙", "white"),
@@ -82,11 +83,20 @@ export class ControllerChess {
   }
 
   movePiece(toMove: HTMLElement) {
-    toMove.textContent = this.pieceSelect.textContent;
+    for (let i = 8; i < 16; i++) {
+      if (this.WHITE_PIECES[i].location == this.pieceSelect) {
+        this.WHITE_PIECES[i].setLocation(toMove);
+        break;
+      }
+    }
     this.pieceSelect.style.backgroundColor = this.colorBoxSelect;
-    this.pieceSelect.textContent = "";
     this.pieceSelect = undefined;
+
+    for (let i = 8; i < 16; i++) {
+      console.log(this.WHITE_PIECES[i].location);
+    }
   }
+
   private setPawns() {
     //white pawns
     for (let i = 9; i <= 16; i++) {
