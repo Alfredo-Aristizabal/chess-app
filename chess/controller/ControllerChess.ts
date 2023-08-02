@@ -7,6 +7,7 @@ export class ControllerChess {
   lastBox: HTMLElement;
   pieceSelect: HTMLElement;
   colorBoxSelect: string;
+  turn: string = "WHITE";
   piecesBlack: string[] = ["♜", "♞", "♝", "♚", "♛", "♟"];
   pieceWhite: string[] = ["♖", "♘", "♗", "♔", "♕", "♙"];
 
@@ -59,14 +60,19 @@ export class ControllerChess {
       return "white";
     }
   }
+
   colorBox(box: HTMLElement): void {
     this.colorBoxSelect = box.style.backgroundColor;
   }
 
   public selectBox(box: HTMLElement): void {
+    const turnConditions: boolean =
+      (this.turn == "WHITE" && this.colorPiece(box) == "white") ||
+      (this.turn == "BLACK" && this.colorPiece(box) == "#779556");
+
     if (!!this.pieceSelect) {
       this.movePiece(box);
-    } else if (this.colorPiece(box) != "") {
+    } else if (this.colorPiece(box) != "" && turnConditions) {
       this.colorBoxSelect = box.style.backgroundColor;
       box.style.backgroundColor = this.colorSelect;
       this.pieceSelect = box;
@@ -83,19 +89,27 @@ export class ControllerChess {
   }
 
   movePiece(toMove: HTMLElement) {
+    console.log("hola");
+    const pieces: Pieces[] =
+      this.turn == "WHITE" ? this.WHITE_PIECES : this.BLACK_PIECES;
     for (let i = 8; i < 16; i++) {
-      if (this.WHITE_PIECES[i].location == this.pieceSelect) {
-        this.WHITE_PIECES[i].setLocation(toMove);
+      if (pieces[i].location == this.pieceSelect) {
+        if (this.turn == "WHITE") {
+          this.WHITE_PIECES[i].setLocation(toMove);
+        } else if (this.turn == "BLACK") {
+          this.BLACK_PIECES[i].setLocation(toMove);
+        }
         break;
       }
     }
+    this.turn = "BLACK";
     this.pieceSelect.style.backgroundColor = this.colorBoxSelect;
     this.pieceSelect = undefined;
-
-    for (let i = 8; i < 16; i++) {
-      console.log(this.WHITE_PIECES[i].location);
-    }
   }
+
+
+  
+  // The next functions deal with the placement of the pieces on the board.
 
   private setPawns() {
     //white pawns
